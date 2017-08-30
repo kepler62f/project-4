@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import createReactClass from 'create-react-class';
+//import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -14,14 +15,19 @@ class App extends Component {
         <RiskToleranceSelection />
         <p><button type="submit" id="summaryStats">Summary Statistics</button></p>
         <p><button type="submit" id="implementPortfolio">Implement Portfolio</button></p>
-        <ResearchPanel />
+        <ResearchPanel chart={<Chart />} />
       </div>
     );
   }
 }
 
 // Component: Select asset classes
-const AssetMenu = React.createClass({
+const AssetMenu = createReactClass({
+  
+  // addAssetClass: function () {
+        
+    //}
+
   render: function() {
     return (
       <div className="assetMenu">
@@ -79,7 +85,7 @@ const AssetMenu = React.createClass({
   }
 });
 
-const AssetSelection = React.createClass({
+const AssetSelection = createReactClass({
   render: function() {
     return (
       <div className="assetSelection">
@@ -104,7 +110,7 @@ const AssetSelection = React.createClass({
   }
 });
 
-const TimeHorizonSelection = React.createClass({
+const TimeHorizonSelection = createReactClass({
   render: function() {
     return (
       <div className="timeHorizonSelection">
@@ -115,7 +121,7 @@ const TimeHorizonSelection = React.createClass({
   }
 });
 
-const TargetReturnSelection = React.createClass({
+const TargetReturnSelection = createReactClass({
   render: function() {
     return (
       <div className="targetReturnSelection">
@@ -126,7 +132,7 @@ const TargetReturnSelection = React.createClass({
   }
 });
 
-const RiskToleranceSelection = React.createClass({
+const RiskToleranceSelection = createReactClass({
   render: function() {
     return (
       <div className="riskToleranceSelection">
@@ -137,26 +143,31 @@ const RiskToleranceSelection = React.createClass({
   }
 });
 
-const ResearchPanel = React.createClass({
-  render: function() {
-    return (
-      <div className="research">
-        <h3>Research</h3>
-        <chart />
-      </div>
-    );
-  }
-});
+///////////////////////
+// Research Panel
+//////////////////////
 
-const chart = React.createClass({
+const Chart = createReactClass({
   render: function() {
     return (
       <div className="chart">
-        <p>Chart</p>
+       <p>Chart</p>
       </div>
     );
   }
 });
 
+const ResearchPanel = createReactClass({
+  render: function(props) {
+    return (
+      <div className="ResearchPanel">
+        <h3>Research</h3>
+          <div className="ResearchPanel-chart">
+            {this.props.chart}
+          </div>
+      </div>
+    );
+  }
+});
 
 export default App;
