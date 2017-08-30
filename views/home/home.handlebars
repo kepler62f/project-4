@@ -1,0 +1,56 @@
+<br>
+
+{{#if userDisplayName}}
+	<ul>
+		<li><a href="/home"><b>Overview (Project 2)</b></a></li>
+		<li><a href="/portfolio"><b>Create New Portfolio</b></a></li>
+	</ul>
+{{/if}}
+
+<br>
+<br>
+<br>
+
+<h2><b>Invest</b></h2>
+
+<p>Select ETF from dropdown to view price history. One unit will be added after clicking 'Buy'. Execution price is simulated.</p> 
+
+<form action="" id="transact" method="post">	
+	<select id="instrumentsMenu">
+		<option value="" selected></option>
+		{{#each instrumentsList as |instrument|}}
+			<option value="{{ instrument.id }}">{{instrument.name}}</option>
+		{{/each}}
+	</select>
+	<a id="buyInstrument" href="">Buy</a>
+</form>
+
+<p id="eodMktPricing"></p> 
+
+<div id="graph"></div>
+
+<br>
+
+<h2><b>Positions</b></h2>
+<table id="positionsTable" class="display compact">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Quantity</th>
+			<th>Unit Cost</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody id="tableBody">
+		{{#each portHolding as |position|}}
+			<tr id="{{ position.id }}"> 
+				<td>{{position.name}}</td>
+				<td>{{position.quantity}}</td>
+				<td>{{position.unitCost}}</td>
+				<td><a id="sellPosition:{{ position.id }}" href="">Sell</a></td>
+			</tr>
+		{{/each}}		
+	</tbody>
+</table>
+
+<script src="script/script.js"></script>

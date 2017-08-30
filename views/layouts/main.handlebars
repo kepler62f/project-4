@@ -1,0 +1,60 @@
+<head>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">    -->
+	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Slabo+13px" rel="stylesheet"> 
+	<!-- <link href="https://fonts.googleapis.com/css?family=Slabo+13px|Slabo+27px|Raleways" rel="stylesheet"> -->
+	<link href='../dist/metricsgraphics.css' rel='stylesheet' type='text/css'>
+	<script src='../dist/metricsgraphics.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+<div class="gridContainer">
+
+	<div class="bannerContainer">
+		<div id="banner"><img id="logo" src="/logo.jpg"><b>ETF</b><i>allocator</i></div>
+	</div>
+
+
+
+
+	<div class="navContainer">
+		
+		<div id="userDisplayName">
+			{{#if userDisplayName}}
+				Hello, {{ userDisplayName }}
+			{{/if}}
+		</div>
+
+		<div id="navBar">
+			<a href="/">Welcome</a>
+			<a href="/about">About</a>
+			<a href="/contact">Contact</a>
+			{{#if userDisplayName}}
+			  	<a href="/users/signOut">Sign Out</a>
+			{{else}}
+			 <a href="/users/signIn">Sign In</a>
+			 <a href="/users/signUp">Sign Up</a>
+			{{/if}}
+		</div>
+	</div> 
+
+<!-- 	{{#if userDisplayName}}
+	<div class="subNavContainer">
+		Menu: <a href="/home">Portfolio</a>
+	</div>
+	{{/if}} -->
+	
+	<div class="bodyContainer">
+		{{{ body }}} 
+	</div>
+
+</div>
+
+
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+</body>

@@ -1,0 +1,77 @@
+html {
+	font-family: 'Slabo 13px', serif;
+}
+
+#banner {
+	font-family: 'Reem Kufi', sans-serif;
+	font-size: 50px;
+	line-height: 80%;
+}
+
+#logo {
+	width:60px;
+	height:60px;
+}
+
+.gridContainer {
+	display: grid;
+	grid-template-columns: 70% 30%;
+} 
+
+.bannerContainer {
+	grid-column: 1;
+	align-items: flex-end;
+	display:flex; 
+	
+}
+
+.navContainer {
+	grid-column: 2;
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between; 
+}
+
+#navBar {
+	text-align: right;
+	display:flex;
+	justify-content: space-between; 
+}
+
+.bodyContainer {
+	grid-column-start: 1;
+  	grid-column-end:   3;
+}
+
+#positionsTable {
+	width: 650px;
+	margin-right: auto; 
+    margin-left: 0px;
+}
+
+thead {
+	text-align: left;
+}
+
+
+.WelcomePageContainer {
+	display: grid;
+	min-height: 500px;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#image {
+		text-align: center;
+}
+
+img {
+	width:206px;
+	height:206px;
+}
+
+#tagline {
+	font-family: 'Reem Kufi', sans-serif;
+	font-size: 50px;
+}
