@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import createReactClass from 'create-react-class';
+//import createReactClass from 'create-react-class';
 //import logo from './logo.svg';
 import './App.css';
 
@@ -19,16 +19,56 @@ class App extends Component {
       </div>
     );
   }
-}
+} 
 
 // Component: Select asset classes
-const AssetMenu = createReactClass({
-  
-  // addAssetClass: function () {
-        
-    //}
+class AssetMenu extends Component { //createReactClass
 
-  render: function() {
+  constructor() { // props
+    //per(props);
+   
+    super()
+
+    this.state = {
+      addedCash: false,
+      addedSP500: false,
+      addedEurope: false,
+      addedEM: false,
+      addedBonds: false
+    };
+
+    // This binding is necessary to make `this` work in the callback
+    //this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e, action_asset) {
+    console.log(action_asset)
+    if (action_asset === "add_cash") {
+        console.log('b4 change this.state', this.state)
+        if (!this.state.addedCash) {
+          this.setState(prevState => ({
+            addedCash: !prevState.addedCash
+          }),
+            () => console.log('after change this.state', this.state)
+          )
+        } else {
+          console.log('already added')
+        }
+        // setState is aync; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+    } else if (action_asset === "remove_cash") {
+      if (this.state.addedCash) {
+          this.setState(prevState => ({
+            addedCash: !prevState.addedCash
+          }),
+            () => console.log('after change this.state', this.state)
+          )
+        } else {
+          console.log('already removed')
+        }
+    }
+  }
+
+  render() {
     return (
       <div className="assetMenu">
         <h3>Select asset classes:</h3>
@@ -43,10 +83,10 @@ const AssetMenu = createReactClass({
           </thead>
           <tbody>
             <tr>
-              <td>Cash</td>
+              <td>Cash</td> 
               <td><button type="submit" id="explore_cash">Research</button></td>
-              <td><button type="submit" id="add_cash">Add</button></td>
-              <td><button type="submit" id="remove_cash">Remove</button></td>
+              <td><button type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}>Add</button></td>
+              <td><button type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}>Remove</button></td>
             </tr>
             <tr>
               <td>S&P 500 </td>
@@ -83,10 +123,10 @@ const AssetMenu = createReactClass({
       </div>
     );
   }
-});
+};
 
-const AssetSelection = createReactClass({
-  render: function() {
+class AssetSelection extends Component {
+  render() {
     return (
       <div className="assetSelection">
         <h3>Selection:</h3>
@@ -108,10 +148,10 @@ const AssetSelection = createReactClass({
       </div>
     );
   }
-});
+};
 
-const TimeHorizonSelection = createReactClass({
-  render: function() {
+class TimeHorizonSelection extends Component {
+  render() {
     return (
       <div className="timeHorizonSelection">
         <h3>Enter time horizon:</h3>
@@ -119,10 +159,10 @@ const TimeHorizonSelection = createReactClass({
       </div>
     );
   }
-});
+};
 
-const TargetReturnSelection = createReactClass({
-  render: function() {
+class TargetReturnSelection extends Component {
+  render() {
     return (
       <div className="targetReturnSelection">
         <h3>Enter target return:</h3>
@@ -130,10 +170,10 @@ const TargetReturnSelection = createReactClass({
       </div>
     );
   }
-});
+};
 
-const RiskToleranceSelection = createReactClass({
-  render: function() {
+class RiskToleranceSelection extends Component {
+  render() {
     return (
       <div className="riskToleranceSelection">
         <h3>Enter risk tolerance:</h3>
@@ -141,24 +181,24 @@ const RiskToleranceSelection = createReactClass({
       </div>
     );
   }
-});
+};
 
 ///////////////////////
 // Research Panel
 //////////////////////
 
-const Chart = createReactClass({
-  render: function() {
+class Chart extends Component {
+  render() {
     return (
       <div className="chart">
        <p>Chart</p>
       </div>
     );
   }
-});
+};
 
-const ResearchPanel = createReactClass({
-  render: function(props) {
+class ResearchPanel extends Component {
+  render(props) {
     return (
       <div className="ResearchPanel">
         <h3>Research</h3>
@@ -168,6 +208,6 @@ const ResearchPanel = createReactClass({
       </div>
     );
   }
-});
+};
 
 export default App;
