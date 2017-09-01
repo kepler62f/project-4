@@ -1,15 +1,92 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper'
 //import createReactClass from 'create-react-class';
 //import logo from './logo.svg';
 import './App.css';
 
+
+// structuring location of state and props ; local/global
+// https://stackoverflow.com/questions/21285923/reactjs-two-components-communicating
+
 class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      selectedAssets: {
+        addedCash: false,
+        addedSP500: false,
+        addedEurope: false,
+        addedEM: false,
+        addedBonds: false,
+        addedGold: false
+      }
+    }
+    this.updateAssetSelection = this.updateAssetSelection.bind(this);
+  }
+
+  updateAssetSelection(action_asset) {
+
+
+    if (action_asset === "add_cash") {
+      console.log('b4 change this.state ', this.state.selectedAssets)
+      console.log('state is ', this.state.selectedAssets.addedCash)
+      console.log('!state is ', !this.state.selectedAssets.addedCash)
+      if (!this.state.selectedAssets.addedCash) {
+
+        // Info on immutability and its helpers
+
+        //https://stackoverflow.com/questions/43040721/react-set-state-in-for-nested-state
+
+        //var updateState = {...this.state.selectedAssets}
+        //updateState.addedCash = 
+
+        //https://stackoverflow.com/questions/18933985/this-setstate-isnt-merging-states-as-i-would-expect
+
+        // https://github.com/kolodny/immutability-helper
+        //https://medium.com/pro-react/a-brief-talk-about-immutability-and-react-s-helpers-70919ab8ae7c
+
+        this.setState((prevState) => {
+          
+          //let previous = prevState.selectedAssets
+          //let toUpdate = 
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedCash: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_cash") {
+      if (this.state.selectedAssets.addedCash) {
+        this.setState((prevState) => {
+          return {
+            addedCash: !prevState.selectedAssets.addedCash
+          }
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>Create new portfolio</h1>
-        <AssetMenu />
-        <AssetSelection />
+        <AssetMenu updateAssetSelection={this.updateAssetSelection} />
+        <AssetSelected />
         <TimeHorizonSelection />
         <TargetReturnSelection />
         <RiskToleranceSelection />
@@ -24,48 +101,46 @@ class App extends Component {
 // Component: Select asset classes
 class AssetMenu extends Component { //createReactClass
 
-  constructor() { // props
+  //constructor(props) { // props
     //per(props);
    
-    super()
+  //  super(props)
 
-    this.state = {
-      addedCash: false,
-      addedSP500: false,
-      addedEurope: false,
-      addedEM: false,
-      addedBonds: false
-    };
 
     // This binding is necessary to make `this` work in the callback
     //this.handleClick = this.handleClick.bind(this);
-  }
+  //}
+
+  // handleClick(e, action_asset) {
+  //   console.log(action_asset)
+  //   if (action_asset === "add_cash") {
+  //       console.log('b4 change this.state', this.state)
+  //       if (!this.state.addedCash) {
+  //         this.setState(prevState => ({
+  //           addedCash: !prevState.addedCash
+  //         }),
+  //           () => console.log('after change this.state', this.state)
+  //         )
+  //       } else {
+  //         console.log('already added')
+  //       }
+  //       // setState is async; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+  //   } else if (action_asset === "remove_cash") {
+  //     if (this.state.addedCash) {
+  //         this.setState(prevState => ({
+  //           addedCash: !prevState.addedCash
+  //         }),
+  //           () => console.log('after change this.state', this.state)
+  //         )
+  //       } else {
+  //         console.log('already removed')
+  //       }
+  //   }
+  // }
 
   handleClick(e, action_asset) {
     console.log(action_asset)
-    if (action_asset === "add_cash") {
-        console.log('b4 change this.state', this.state)
-        if (!this.state.addedCash) {
-          this.setState(prevState => ({
-            addedCash: !prevState.addedCash
-          }),
-            () => console.log('after change this.state', this.state)
-          )
-        } else {
-          console.log('already added')
-        }
-        // setState is aync; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
-    } else if (action_asset === "remove_cash") {
-      if (this.state.addedCash) {
-          this.setState(prevState => ({
-            addedCash: !prevState.addedCash
-          }),
-            () => console.log('after change this.state', this.state)
-          )
-        } else {
-          console.log('already removed')
-        }
-    }
+    this.props.updateAssetSelection(action_asset)
   }
 
   render() {
@@ -125,7 +200,7 @@ class AssetMenu extends Component { //createReactClass
   }
 };
 
-class AssetSelection extends Component {
+class AssetSelected extends Component {
   render() {
     return (
       <div className="assetSelection">
