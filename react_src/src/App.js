@@ -35,21 +35,10 @@ class App extends Component {
       if (!this.state.selectedAssets.addedCash) {
 
         // Info on immutability and its helpers
-
-        //https://stackoverflow.com/questions/43040721/react-set-state-in-for-nested-state
-
-        //var updateState = {...this.state.selectedAssets}
-        //updateState.addedCash = 
-
-        //https://stackoverflow.com/questions/18933985/this-setstate-isnt-merging-states-as-i-would-expect
-
         // https://github.com/kolodny/immutability-helper
         //https://medium.com/pro-react/a-brief-talk-about-immutability-and-react-s-helpers-70919ab8ae7c
 
         this.setState((prevState) => {
-          
-          //let previous = prevState.selectedAssets
-          //let toUpdate = 
           let newState = update(prevState, {
                 selectedAssets: {
                   addedCash: {
@@ -69,9 +58,15 @@ class App extends Component {
     } else if (action_asset === "remove_cash") {
       if (this.state.selectedAssets.addedCash) {
         this.setState((prevState) => {
-          return {
-            addedCash: !prevState.selectedAssets.addedCash
-          }
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedCash: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
         },
           () => console.log('after change this.state', this.state.selectedAssets)
         )
