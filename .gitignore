@@ -2,3 +2,5 @@
 node_modules
 dev_utility.js
 testing
+.idea/
+react_src/code_dump.js

@@ -20,18 +20,39 @@ class App extends Component {
         addedEM: false,
         addedBonds: false,
         addedGold: false
-      }
+      },
+      allocation: [0,0,0,0,0,0],
+      portfolioAnalysis: [{
+        average_returns: [
+          {"Cash":0.2036666667}, 
+          {"S&P 500":0.0115467661}
+        ],
+        covariance_matrix: [0,0],
+        target_return: [0,0],
+        optimal_weights: [
+          {"Cash": 0},
+          {"S&P 500": 0},
+          {"MSCI Europe": 0},
+          {"MSCI Emerging Markets": 0},
+          {"ICE US Core Bond": 0},
+          {"Gold": 0}
+        ],
+        expected_return: 0,
+        expected_variance: 0,
+        sharpe_ratio: 0
+      }]
     }
     this.updateAssetSelection = this.updateAssetSelection.bind(this);
   }
 
   updateAssetSelection(action_asset) {
 
-
     if (action_asset === "add_cash") {
       console.log('b4 change this.state ', this.state.selectedAssets)
       console.log('state is ', this.state.selectedAssets.addedCash)
       console.log('!state is ', !this.state.selectedAssets.addedCash)
+      console.log('allocation is ', this.state.allocation)
+
       if (!this.state.selectedAssets.addedCash) {
 
         // Info on immutability and its helpers
@@ -50,7 +71,7 @@ class App extends Component {
           return newState        
         },
           () => console.log('after change this.state', this.state.selectedAssets)
-          // setState is async; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
         )
       } else {
         console.log('already added')
@@ -74,67 +95,320 @@ class App extends Component {
         console.log('already removed')
       }
     }
-  }
+
+    if (action_asset === "add_sp500") {
+
+      if (!this.state.selectedAssets.addedSP500) {
+
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedSP500: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_sp500") {
+      if (this.state.selectedAssets.addedSP500) {
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedSP500: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+
+    if (action_asset === "add_europe") {
+
+      if (!this.state.selectedAssets.addedEurope) {
+
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedEurope: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_europe") {
+      if (this.state.selectedAssets.addedEurope) {
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedEurope: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+
+    if (action_asset === "add_EM") {
+
+      if (!this.state.selectedAssets.addedEM) {
+
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedEM: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_EM") {
+      if (this.state.selectedAssets.addedEM) {
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedEM: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+
+    if (action_asset === "add_bonds") {
+
+      if (!this.state.selectedAssets.addedBonds) {
+
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedBonds: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_bonds") {
+      if (this.state.selectedAssets.addedBonds) {
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedBonds: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+
+    if (action_asset === "add_gold") {
+
+      if (!this.state.selectedAssets.addedGold) {
+
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedGold: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState        
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+          // setState is async so use callback; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
+        )
+      } else {
+        console.log('already added')
+      }         
+    } else if (action_asset === "remove_gold") {
+      if (this.state.selectedAssets.addedGold) {
+        this.setState((prevState) => {
+          let newState = update(prevState, {
+                selectedAssets: {
+                  addedGold: {
+                    $apply: (prev) =>
+                      {return !prev}
+                    }
+                  }
+                })
+          return newState 
+        },
+          () => console.log('after change this.state', this.state.selectedAssets)
+        )
+      } else {
+        console.log('already removed')
+      }
+    }
+
+  } // method: updateAssetSelection()
+
+  getSummaryStats() {
+
+        const url = 'http://localhost:8000/create_portfolio/get_optimal_weights?'
+        var query = ''
+
+        if (this.state.selectedAssets.addedCash) 
+          {query += 'addedCash=true&'}
+        else
+          {query += 'addedCash=false&'}
+        if (this.state.selectedAssets.addedSP500) 
+          {query += 'addedSP500=true&'}
+        else
+          {query += 'addedSP500=false&'}
+        if (this.state.selectedAssets.addedEurope) 
+          {query += 'addedEurope=true&'}
+        else
+          {query += 'addedEurope=false&'}
+        if (this.state.selectedAssets.addedEM) 
+          {query += 'addedEM=true&'}
+        else
+          {query += 'addedEM=false&'}
+        if (this.state.selectedAssets.addedBonds) 
+          {query += 'addedBonds=true&'}
+        else
+          {query += 'addedBonds=false&'}
+        if (this.state.selectedAssets.addedGold) 
+          {query += 'addedGold=true'}
+        else
+          {query += 'addedGold=false'}
+
+        const APIstring = url + query
+        console.log(APIstring)
+
+        fetch(APIstring)
+          .then(function (response) {
+            return response.json()
+          }).then(function (data) {
+            
+
+            console.log('Parsed data', data) // try opening windows and render
+
+            var wind = window.open(data, "popupWindow", "width=600,height=600,scrollbars=yes");
+            wind.document.write(JSON.stringify(data));
+
+
+          }).catch(function (ex) {
+            console.error('Getting data failed', ex)
+          })
+
+      } // getSummaryStats
+
+
+  componentDidMount() {
+
+      // get optimal weights for selected asset classes
+      
+
+      
+  } // componentDidMount 
+  
+
 
   render() {
     return (
       <div>
         <h1>Create new portfolio</h1>
+
         <AssetMenu updateAssetSelection={this.updateAssetSelection} />
-        <AssetSelected />
-        <TimeHorizonSelection />
+        <AssetSelected selectedAssets={this.state.selectedAssets} />
+        
         <TargetReturnSelection />
-        <RiskToleranceSelection />
-        <p><button type="submit" id="summaryStats">Summary Statistics</button></p>
+        
+        <p><button type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats()}>Analyze Portfolio</button></p>
         <p><button type="submit" id="implementPortfolio">Implement Portfolio</button></p>
         <ResearchPanel chart={<Chart />} />
+        <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
       </div>
     );
   }
 } 
 
+////////////////
+// KIV
+// <TimeHorizonSelection />
+// <RiskToleranceSelection />
+////////////////
+
+
+// class APIdata extends Component {
+//   render(props) {
+//     return (
+//       <div className="APIdata">
+//        <p>API data:</p>
+//        {this.props.api_resp}
+//       </div>
+//     );
+//   }
+// };
+
+
+
 // Component: Select asset classes
 class AssetMenu extends Component { //createReactClass
 
-  //constructor(props) { // props
-    //per(props);
-   
-  //  super(props)
-
-
-    // This binding is necessary to make `this` work in the callback
-    //this.handleClick = this.handleClick.bind(this);
-  //}
-
-  // handleClick(e, action_asset) {
-  //   console.log(action_asset)
-  //   if (action_asset === "add_cash") {
-  //       console.log('b4 change this.state', this.state)
-  //       if (!this.state.addedCash) {
-  //         this.setState(prevState => ({
-  //           addedCash: !prevState.addedCash
-  //         }),
-  //           () => console.log('after change this.state', this.state)
-  //         )
-  //       } else {
-  //         console.log('already added')
-  //       }
-  //       // setState is async; see: https://stackoverflow.com/questions/30782948/why-calling-react-setstate-method-doesnt-mutate-the-state-immediately
-  //   } else if (action_asset === "remove_cash") {
-  //     if (this.state.addedCash) {
-  //         this.setState(prevState => ({
-  //           addedCash: !prevState.addedCash
-  //         }),
-  //           () => console.log('after change this.state', this.state)
-  //         )
-  //       } else {
-  //         console.log('already removed')
-  //       }
-  //   }
-  // }
-
   handleClick(e, action_asset) {
-    console.log(action_asset)
+    //console.log(action_asset)
     this.props.updateAssetSelection(action_asset)
   }
 
@@ -161,32 +435,32 @@ class AssetMenu extends Component { //createReactClass
             <tr>
               <td>S&P 500 </td>
               <td><button type="submit" id="explore_sp500">Research</button></td>
-              <td><button type="submit" id="add_sp500">Add</button></td>
-              <td><button type="submit" id="remove_sps500">Remove</button></td>
+              <td><button type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}>Add</button></td>
+              <td><button type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}>Remove</button></td>
             </tr>
             <tr>
               <td>MSCI Europe</td>
               <td><button type="submit" id="explore_europe">Research</button></td>
-              <td><button type="submit" id="add_europe">Add</button> </td>
-              <td><button type="submit" id="remove_europe">Remove</button></td>
+              <td><button type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}>Add</button> </td>
+              <td><button type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}>Remove</button></td>
             </tr>
             <tr>
               <td>MSCI Emerging Market </td>
               <td><button type="submit" id="explore_EM">Research</button></td>
-              <td><button type="submit" id="add_EM">Add</button> </td>
-              <td><button type="submit" id="remove_EM">Remove</button></td>
+              <td><button type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}>Add</button> </td>
+              <td><button type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}>Remove</button></td>
             </tr>
             <tr>
               <td>ICE U.S. Treasury Core Bond Index</td>
               <td><button type="submit" id="explore_bonds">Research</button></td>
-              <td><button type="submit" id="add_bonds">Add</button></td>
-              <td><button type="submit" id="remove_bonds">Remove</button></td>
+              <td><button type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}>Add</button></td>
+              <td><button type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}>Remove</button></td>
             </tr>
             <tr>
               <td>Gold</td>
               <td><button type="submit" id="explore_gold">Research</button></td>
-              <td><button type="submit" id="add_gold">Add</button> </td>
-              <td><button type="submit" id="remove_gold">Remove</button></td>
+              <td><button type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}>Add</button> </td>
+              <td><button type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}>Remove</button></td>
             </tr>
           </tbody>
         </table>
@@ -195,8 +469,47 @@ class AssetMenu extends Component { //createReactClass
   }
 };
 
+
+//{this.props.selectedAssets.map((asset, index) => {
+
+              //     <td>{asset} {index})</td> 
+              // }
+              //   )
+
+
+              // }
+
+
+              // .map((obj) => 
+              //   return({obj})
+              //   )}
+
+
+// <td>{String(this.props.assets)}</td>
+
+
+              // {this.props.selectedAssets.map((selectedAsset) => {
+
+              //     if (selectedAssets) {
+              //       <td>{String(this.props.assets)}</td>
+              //     }
+              //   }
+
+              //   )
+              // }
+
+
+
+
+// https://react-cn.github.io/react/tips/if-else-in-JSX.html
+// https://en.wikipedia.org/wiki/Immediately-invoked_function_expression
+
+// try dynamic table
+// https://stackoverflow.com/questions/30281143/react-js-creating-a-table-with-a-dynamic-amount-of-rows-with-an-editable-column
+
+
 class AssetSelected extends Component {
-  render() {
+  render(props) {
     return (
       <div className="assetSelection">
         <h3>Selection:</h3>
@@ -209,10 +522,72 @@ class AssetSelected extends Component {
             </tr>
           </thead>
           <tbody id="tableBody">
-            <tr>
-              <td>None</td>
-              <td><input type="text" id="allocation1" placeholder="0" ref="" /></td>
-            </tr>
+
+              {(() => {
+                if (this.props.selectedAssets.addedCash) 
+                  return (
+                    <tr> 
+                      <td>Cash</td>
+                      <td><input type="text" id="allocation1" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
+
+              {(() => {
+                if (this.props.selectedAssets.addedSP500) 
+                  return (
+                    <tr> 
+                      <td>S&P 500</td>
+                      <td><input type="text" id="allocation2" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
+
+              {(() => {
+                if (this.props.selectedAssets.addedEurope) 
+                  return (
+                    <tr> 
+                      <td>MSCI Europe</td>
+                      <td><input type="text" id="allocation3" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
+
+              {(() => {             
+                if (this.props.selectedAssets.addedEM) 
+                  return (
+                    <tr> 
+                      <td>MSCI Emerging Markets</td>
+                      <td><input type="text" id="allocation4" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
+
+              {(() => {
+                if (this.props.selectedAssets.addedBonds) 
+                  return (
+                    <tr> 
+                      <td>ICE U.S. Treasury Core Bond Index</td>
+                      <td><input type="text" id="allocation5" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
+
+              {(() => {
+                if (this.props.selectedAssets.addedGold) 
+                  return (
+                    <tr> 
+                      <td>Gold</td>
+                      <td><input type="text" id="allocation6" placeholder="0" ref="" /></td>
+                    </tr>
+                    )
+                })()
+              }
           </tbody>
         </table>        
       </div>
@@ -280,4 +655,51 @@ class ResearchPanel extends Component {
   }
 };
 
+
+// Renderings object (of objects) first wrapped in array:
+// https://stackoverflow.com/questions/32157286/rendering-react-components-from-array-of-objects
+
+// Iterate object's properties
+// https://stackoverflow.com/questions/34913675/how-to-iterate-keys-values-in-javascript
+
+class PortfolioAnalysis extends Component {
+  render(props) {
+
+    let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
+
+
+              //Object.keys(dataField.average_returns).forEach(function(key) {}
+
+              let average_returns = dataField.average_returns.map(function(obj) {
+                let asset = Object.keys(obj)[0]
+                let value = obj[asset]
+                return (<div>
+                          {asset} 
+                          {value}
+                        </div>)
+              })
+
+              return (
+                   <div>Average Returns: {average_returns}</div>
+                )
+            })
+    return (
+      <div className="PortfolioAnalysis">
+        <h3>Portfolio Analysis</h3>
+          {portfolioAnalysisComponent}                      
+      </div>
+    );
+  }
+};
+
 export default App;
+
+
+// {this.props.portfolioAnalysis.average_returns}
+// {this.props.portfolioAnalysis.covariance_matrix}
+          
+          // {this.props.portfolioAnalysis.target_return}
+          // {this.props.portfolioAnalysis.optimal_weights}
+          // {this.props.portfolioAnalysis.expected_return}
+          // {this.props.portfolioAnalysis.expected_variance}
+          // {this.props.portfolioAnalysis.sharpe_ratio}
