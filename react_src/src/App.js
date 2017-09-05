@@ -21,11 +21,11 @@ class App extends Component {
         addedBonds: false,
         addedGold: false
       },
-      allocation: [0,0,0,0,0,0],
+      proposed_allocation: [0,0,0,0,0,0],
       portfolioAnalysis: [{
         average_returns: [
-          {"Cash":0.2036666667}, 
-          {"S&P 500":0.0115467661}
+          {"Cash":0}, 
+          {"S&P 500":0}
         ],
         covariance_matrix: [0,0],
         target_return: [0,0],
@@ -42,8 +42,57 @@ class App extends Component {
         sharpe_ratio: 0
       }]
     }
-    this.updateAssetSelection = this.updateAssetSelection.bind(this);
+    this.updateAssetSelection = this.updateAssetSelection.bind(this)
+    this.updateOptimalWeights = this.updateOptimalWeights.bind(this)
   }
+
+
+  updateOptimalWeights(weights) {
+
+    Object.keys(weights).map(function(weight) {
+              console.log(weight)
+              console.log(weights[weight])
+
+              if (weight === "Cash") {
+                console.log("yes it's cash")
+
+
+                let newState = update(this.state, {
+                        portfolioAnalysis: {
+                          optimal_weights: {
+                            Cash: {
+                              $set: weights[weight]  
+                            }
+                          }
+                        }
+                  })
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
+                )
+
+                // this.setState(() => {
+                //   let newState = update(this.state, {
+                //     0: {
+                //       portfolioAnalysis: {
+                //         optimal_weights: {
+                //           Cash: {
+                //             $set: weights[weight]  
+                //           }
+                //         }
+                //       }
+                //     }
+                //   })
+                //   return newState 
+                // },
+                //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
+                // )
+
+
+              } // if cash
+    })
+  
+  } // updateOptimalWeights
 
   updateAssetSelection(action_asset) {
 
@@ -51,7 +100,7 @@ class App extends Component {
       console.log('b4 change this.state ', this.state.selectedAssets)
       console.log('state is ', this.state.selectedAssets.addedCash)
       console.log('!state is ', !this.state.selectedAssets.addedCash)
-      console.log('allocation is ', this.state.allocation)
+      console.log('allocation is ', this.state.proposed_allocation)
 
       if (!this.state.selectedAssets.addedCash) {
 
@@ -303,7 +352,7 @@ class App extends Component {
 
   } // method: updateAssetSelection()
 
-  getSummaryStats() {
+  getSummaryStats(updateOptimalWeights) {
 
         const url = 'http://localhost:8000/create_portfolio/get_optimal_weights?'
         var query = ''
@@ -344,8 +393,49 @@ class App extends Component {
 
             console.log('Parsed data', data) // try opening windows and render
 
-            var wind = window.open(data, "popupWindow", "width=600,height=600,scrollbars=yes");
-            wind.document.write(JSON.stringify(data));
+            // let wind = window.open(data, "popupWindow", "width=600,height=600,scrollbars=yes");
+            // wind.document.write(JSON.stringify(data));
+
+            console.log('optimal weights: ', data.optimal_weights)
+
+            //console.log(typeof(data.optimal_weights)) //
+            //console.log(JSON.parse(data.optimal_weights))
+
+            let objects = JSON.parse(data.optimal_weights)
+            // console.log("type: ", typeof(objects))
+
+            // Object.keys(objects).map(function(object) {
+            //   console.log(object)
+            // })
+
+            updateOptimalWeights(objects)
+
+            // object.map(function(obj, index) {  
+            //   let asset = Object.keys(obj)[0]
+            //   let weight = obj[asset]
+            //   console.log('asset: ', asset, '  ', 'weight: ', weight)
+            //   //return 
+            // })
+
+      //       if (this.state.selectedAssets.addedBonds) {
+      //   this.setState((prevState) => {
+      //     let newState = update(prevState, {
+      //           selectedAssets: {
+      //             addedBonds: {
+      //               $apply: (prev) =>
+      //                 {return !prev}
+      //               }
+      //             }
+      //           })
+      //     return newState 
+      //   },
+      //     () => console.log('after change this.state', this.state.selectedAssets)
+      //   )
+      // } else {
+      //   console.log('already removed')
+      // }
+
+
 
 
           }).catch(function (ex) {
@@ -375,7 +465,7 @@ class App extends Component {
         
         <TargetReturnSelection />
         
-        <p><button type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats()}>Analyze Portfolio</button></p>
+        <p><button type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</button></p>
         <p><button type="submit" id="implementPortfolio">Implement Portfolio</button></p>
         <ResearchPanel chart={<Chart />} />
         <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
@@ -665,24 +755,61 @@ class ResearchPanel extends Component {
 class PortfolioAnalysis extends Component {
   render(props) {
 
+    // let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
+
+
+    //           //Object.keys(dataField.average_returns).forEach(function(key) {}
+
+    //           let average_returns = dataField.average_returns.map(function(obj) {
+    //             let asset = Object.keys(obj)[0]
+    //             let value = obj[asset]
+    //             return (<div>
+    //                       {asset} 
+    //                       {value}
+    //                     </div>)
+    //           })
+
+    //           return (
+    //                <div>Average Returns: {average_returns}</div>
+    //             )
+    //         })
+    
     let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
 
+        let optimal_weights = dataField.optimal_weights.map(function(obj, index) {
+          //console.log("kkkk ", Object.keys(obj))
+          //console.log("mmmm ", obj)
+          let asset = Object.keys(obj)[0]
+          let value = obj[asset]
+          //console.log("xxxx ", index)
+          //console.log("yyyy ", asset)
+          //console.log("zzzz ", value)
+          return (
+                    <tr>
+                      <td>{asset}</td>
+                      <td>{value}</td>
+                    </tr>
+                  )
+        })
 
-              //Object.keys(dataField.average_returns).forEach(function(key) {}
+        return (
+             <div>
+                <table id="optimizedWeights">
+                  <thead>
+                    <tr>
+                      <th>Asset Class</th>
+                      <th>Markowitz Optimized Weights (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="optimizedWeightsTableBody">
+                    {optimal_weights}
+                  </tbody>
+                </table>
+             </div>
+          )
+    })
 
-              let average_returns = dataField.average_returns.map(function(obj) {
-                let asset = Object.keys(obj)[0]
-                let value = obj[asset]
-                return (<div>
-                          {asset} 
-                          {value}
-                        </div>)
-              })
 
-              return (
-                   <div>Average Returns: {average_returns}</div>
-                )
-            })
     return (
       <div className="PortfolioAnalysis">
         <h3>Portfolio Analysis</h3>
