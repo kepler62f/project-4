@@ -10,9 +10,15 @@
     "react-scripts": "1.0.12"
   },
   "scripts": {
-    "start": "PORT=3003 react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "homepage": "https://kepler62f.github.io/project-4/",
+  "devDependencies": {
+    "gh-pages": "^1.0.0"
   }
 }

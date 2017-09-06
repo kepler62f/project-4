@@ -1,6 +1,6 @@
 {
   "name": "ETFAllocator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Allocation, monitoring, trading and risk management tools for ETF portfolios",
   "main": "index.js",
   "author": "kepler62f",

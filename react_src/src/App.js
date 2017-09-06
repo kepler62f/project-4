@@ -57,19 +57,19 @@ class App extends Component {
                 console.log("yes it's cash")
 
 
-                let newState = update(this.state, {
-                        portfolioAnalysis: {
-                          optimal_weights: {
-                            Cash: {
-                              $set: weights[weight]  
-                            }
-                          }
-                        }
-                  })
+                // let newState = update(this.state, {
+                //         portfolioAnalysis: {
+                //           optimal_weights: {
+                //             Cash: {
+                //               $set: weights[weight]  
+                //             }
+                //           }
+                //         }
+                //   })
 
-                this.setState(newState,
-                  () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
-                )
+                // this.setState(newState,
+                //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
+                // )
 
                 // this.setState(() => {
                 //   let newState = update(this.state, {
@@ -354,7 +354,7 @@ class App extends Component {
 
   getSummaryStats(updateOptimalWeights) {
 
-        const url = 'http://localhost:8000/create_portfolio/get_optimal_weights?'
+        const url = 'https://localhost:8000/create_portfolio/get_optimal_weights?'
         var query = ''
 
         if (this.state.selectedAssets.addedCash) 
@@ -559,38 +559,6 @@ class AssetMenu extends Component { //createReactClass
   }
 };
 
-
-//{this.props.selectedAssets.map((asset, index) => {
-
-              //     <td>{asset} {index})</td> 
-              // }
-              //   )
-
-
-              // }
-
-
-              // .map((obj) => 
-              //   return({obj})
-              //   )}
-
-
-// <td>{String(this.props.assets)}</td>
-
-
-              // {this.props.selectedAssets.map((selectedAsset) => {
-
-              //     if (selectedAssets) {
-              //       <td>{String(this.props.assets)}</td>
-              //     }
-              //   }
-
-              //   )
-              // }
-
-
-
-
 // https://react-cn.github.io/react/tips/if-else-in-JSX.html
 // https://en.wikipedia.org/wiki/Immediately-invoked_function_expression
 
@@ -726,7 +694,7 @@ class Chart extends Component {
   render() {
     return (
       <div className="chart">
-       <p>Chart</p>
+       <p>(Static info of individual asset class will appear here) </p>
       </div>
     );
   }
