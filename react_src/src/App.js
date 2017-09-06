@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper'
 //import createReactClass from 'create-react-class';
-//import logo from './logo.svg';
-import './App.css';
-
+// import './App.css';
+import './foundation.css';
+//import Foundation from 'react-foundation'
+import { 
+  Button, Colors, Sizes, 
+  GridContainer, Grid, Cell 
+} from 'react-foundation';
 
 // structuring location of state and props ; local/global
 // https://stackoverflow.com/questions/21285923/reactjs-two-components-communicating
@@ -460,17 +464,51 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Create new portfolio</h1>
 
-        <AssetMenu updateAssetSelection={this.updateAssetSelection} />
-        <AssetSelected selectedAssets={this.state.selectedAssets} />
+        <div className="grid-x grid-padding-x">
+          <h1>Create new portfolio</h1>
+        </div>
         
-        <TargetReturnSelection />
-        
-        <p><button type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</button></p>
-        <p><button type="submit" id="implementPortfolio">Implement Portfolio</button></p>
-        <ResearchPanel chart={<Chart />} />
-        <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
+        <div className="grid-x grid-padding-x">
+          
+            <div className="medium-6 large-4 cell">
+                
+                <div className="primary callout">
+
+                  <AssetMenu updateAssetSelection={this.updateAssetSelection} />
+                  
+                  <div className="primary callout">
+                    <AssetSelected selectedAssets={this.state.selectedAssets} />
+                  </div>
+
+                  
+                  
+                  
+                  <div className="button-basics-example">                  
+                      <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
+                  </div>
+          
+                </div>
+
+            </div>
+
+            <div className="medium-6 large-8 cell">
+                
+                
+                  <div className="primary callout">
+                    <ResearchPanel chart={<Chart />} />
+                  </div>
+                
+
+                
+                  <div className="primary callout">
+                    <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
+                  </div>
+                
+            </div>
+
+        </div>
+
       </div>
     );
   }
@@ -480,6 +518,11 @@ class App extends Component {
 // KIV
 // <TimeHorizonSelection />
 // <RiskToleranceSelection />
+// <div className="primary callout">
+// <TargetReturnSelection />  
+// </div>
+
+// <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="implementPortfolio">Implement Portfolio</Button>
 ////////////////
 
 
@@ -520,39 +563,39 @@ class AssetMenu extends Component { //createReactClass
           <tbody>
             <tr>
               <td>Cash</td> 
-              <td><button type="submit" id="explore_cash">Research</button></td>
-              <td><button type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}>Add</button></td>
-              <td><button type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_cash">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}>Add</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}>Remove</Button></td>
             </tr>
             <tr>
               <td>S&P 500 </td>
-              <td><button type="submit" id="explore_sp500">Research</button></td>
-              <td><button type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}>Add</button></td>
-              <td><button type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_sp500">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}>Add</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}>Remove</Button></td>
             </tr>
             <tr>
               <td>MSCI Europe</td>
-              <td><button type="submit" id="explore_europe">Research</button></td>
-              <td><button type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}>Add</button> </td>
-              <td><button type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_europe">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}>Add</Button> </td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}>Remove</Button></td>
             </tr>
             <tr>
               <td>MSCI Emerging Market </td>
-              <td><button type="submit" id="explore_EM">Research</button></td>
-              <td><button type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}>Add</button> </td>
-              <td><button type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_EM">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}>Add</Button> </td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}>Remove</Button></td>
             </tr>
             <tr>
               <td>ICE U.S. Treasury Core Bond Index</td>
-              <td><button type="submit" id="explore_bonds">Research</button></td>
-              <td><button type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}>Add</button></td>
-              <td><button type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_bonds">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}>Add</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}>Remove</Button></td>
             </tr>
             <tr>
               <td>Gold</td>
-              <td><button type="submit" id="explore_gold">Research</button></td>
-              <td><button type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}>Add</button> </td>
-              <td><button type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}>Remove</button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_gold">Research</Button></td>
+              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}>Add</Button> </td>
+              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}>Remove</Button></td>
             </tr>
           </tbody>
         </table>
