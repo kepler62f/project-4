@@ -90,7 +90,7 @@ class App extends Component {
 
 
               } // if cash
-              
+
     })
   
   } // updateOptimalWeights
@@ -355,7 +355,7 @@ class App extends Component {
 
   getSummaryStats(updateOptimalWeights) {
 
-        const url = 'http://localhost:8000/create_portfolio/get_optimal_weights?'
+        const url = 'https://localhost:8000/create_portfolio/get_optimal_weights?'
         //const url = 'https://immense-refuge-34734.herokuapp.com/create_portfolio/get_optimal_weights?'
         var query = ''
 
