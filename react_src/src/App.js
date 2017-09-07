@@ -359,8 +359,8 @@ class App extends Component {
 
   getSummaryStats(updateOptimalWeights) {
 
-        const url = 'https://localhost:8000/create_portfolio/get_optimal_weights?'
-        //const url = 'https://immense-refuge-34734.herokuapp.com/create_portfolio/get_optimal_weights?'
+        //const url = 'https://localhost:8000/create_portfolio/get_optimal_weights?'
+        const url = 'https://sheltered-coast-96154.herokuapp.com/create_portfolio/get_optimal_weights?'
         var query = ''
 
         if (this.state.selectedAssets.addedCash) 
