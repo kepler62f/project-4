@@ -346,6 +346,8 @@ class App extends Component {
             
             console.log('Parsed data', data) // try opening windows and render
             console.log('optimal weights: ', data.optimal_weights)
+            console.log('expected_return: ', data.expected_return)
+            console.log('expected_variance: ', data.expected_variance)
 
             let weights = JSON.parse(data.optimal_weights)
 
@@ -485,7 +487,47 @@ class App extends Component {
                   () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[5])
                 )
               } // if ICE US Core Bond
-            })
+
+
+              
+                
+
+            }) // map
+          
+
+          console.log("before, expected_return is: ", this.state.portfolioAnalysis[0].expected_return) 
+                
+              let newRet = update(this.state, {
+                  portfolioAnalysis: { 
+                    0: {
+                    expected_return: { 
+                          $set: (data.expected_return*100).toFixed(4)
+                      }
+                    } 
+                  }
+                }
+              )
+
+            this.setState(newRet,
+              () => console.log('after change this.state exp ret:', this.state.portfolioAnalysis[0].expected_return)
+            )
+
+            console.log("before, expected_return is: ", this.state.portfolioAnalysis[0].expected_variance) 
+            
+              let newVariance = update(this.state, {
+                  portfolioAnalysis: { 
+                    0: {
+                    expected_variance: { 
+                          $set: (data.expected_variance*100).toFixed(4)
+                      }
+                    } 
+                  }
+                }
+              )
+
+            this.setState(newVariance,
+              () => console.log('after change this.state exp ret:', this.state.portfolioAnalysis[0].expected_variance)
+            )
 
           }).catch((ex) => {
             console.error('Getting data failed', ex)
@@ -814,8 +856,11 @@ class PortfolioAnalysis extends Component {
     return (
       <div className="PortfolioAnalysis">
         <h3>Portfolio Analysis</h3>
+          <p>Based on historical monthly returns from July 2012 to Jun 2017 for the selected asset classes, with portfolio target return pegged at 70th percentile of average monthly returns, the following allocation would have produced the best risk adjusted returns on a portfolio basis.</p>
           {portfolioAnalysisComponent}
-                              
+          <p></p>
+          <p><b>Expected Return:</b> {this.props.portfolioAnalysis[0].expected_return} %</p>
+          <p><b>Expected Variance:</b> {this.props.portfolioAnalysis[0].expected_variance} %</p>
       </div>
     );
   }
