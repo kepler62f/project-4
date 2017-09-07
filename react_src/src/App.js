@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper'
-//import createReactClass from 'create-react-class';
-// import './App.css';
 import './foundation.css';
-//import Foundation from 'react-foundation'
 import { 
   Button, Colors, Sizes, 
   GridContainer, Grid, Cell 
@@ -47,61 +44,8 @@ class App extends Component {
       }]
     }
     this.updateAssetSelection = this.updateAssetSelection.bind(this)
-    //this.updateOptimalWeights = this.updateOptimalWeights.bind(this)
     this.getSummaryStats = this.getSummaryStats.bind(this)
   }
-
-
-
-  // updateOptimalWeights(weights) {
-
-  //   Object.keys(weights).map(function(weight) {
-  //             console.log(weight)
-  //             console.log(weights[weight])
-
-  //             if (weight === "Cash") {
-  //               console.log("yes it's cash")
-
-  //               console.log(this)
-
-  //               console.log("before, weight is: ") //, this.state.portfolioAnalysis
-  //               // let newState = update(this.state, {
-  //               //         portfolioAnalysis: {
-  //               //           optimal_weights: {
-  //               //             Cash: {
-  //               //               $set: weights[weight]  
-  //               //             }
-  //               //           }
-  //               //         }
-  //               //   })
-
-  //               // this.setState(newState,
-  //               //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
-  //               // )
-
-  //               // this.setState(() => {
-  //               //   let newState = update(this.state, {
-  //               //     0: {
-  //               //       portfolioAnalysis: {
-  //               //         optimal_weights: {
-  //               //           Cash: {
-  //               //             $set: weights[weight]  
-  //               //           }
-  //               //         }
-  //               //       }
-  //               //     }
-  //               //   })
-  //               //   return newState 
-  //               // },
-  //               //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
-  //               // )
-
-
-  //             } // if cash
-
-  //   })
-  
-  // } // updateOptimalWeights
 
   updateAssetSelection(action_asset) {
 
@@ -395,27 +339,13 @@ class App extends Component {
         const APIstring = url + query
         console.log(APIstring)
 
-        // fetch(APIstring)
-        //   .then(function (response) {
-        //     return response.json()
-        //   }).then(function (data) {
-
-
         fetch(APIstring)
           .then((response) => {
             return response.json()
           }).then((data) => {
             
-
             console.log('Parsed data', data) // try opening windows and render
-
-            // let wind = window.open(data, "popupWindow", "width=600,height=600,scrollbars=yes");
-            // wind.document.write(JSON.stringify(data));
-
             console.log('optimal weights: ', data.optimal_weights)
-
-            //console.log(typeof(data.optimal_weights)) //
-            //console.log(JSON.parse(data.optimal_weights))
 
             let weights = JSON.parse(data.optimal_weights)
 
@@ -557,46 +487,6 @@ class App extends Component {
               } // if ICE US Core Bond
             })
 
-
-
-
-
-
-
-
-
-
-
-
-
-            // object.map(function(obj, index) {  
-            //   let asset = Object.keys(obj)[0]
-            //   let weight = obj[asset]
-            //   console.log('asset: ', asset, '  ', 'weight: ', weight)
-            //   //return 
-            // })
-
-      //       if (this.state.selectedAssets.addedBonds) {
-      //   this.setState((prevState) => {
-      //     let newState = update(prevState, {
-      //           selectedAssets: {
-      //             addedBonds: {
-      //               $apply: (prev) =>
-      //                 {return !prev}
-      //               }
-      //             }
-      //           })
-      //     return newState 
-      //   },
-      //     () => console.log('after change this.state', this.state.selectedAssets)
-      //   )
-      // } else {
-      //   console.log('already removed')
-      // }
-
-
-
-
           }).catch((ex) => {
             console.error('Getting data failed', ex)
           })
@@ -633,8 +523,7 @@ class App extends Component {
             </div>
 
             <div className="medium-6 large-8 cell">
-                
-                
+                                
                   <div className="primary callout">
                     <ResearchPanel chart={<Chart />} />
                   </div>
@@ -654,35 +543,18 @@ class App extends Component {
 } 
 
 ////////////////
-// KIV
+// Future enhancements
 // <TimeHorizonSelection />
 // <RiskToleranceSelection />
-// <div className="primary callout">
 // <TargetReturnSelection />  
-// </div>
-
 // <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="implementPortfolio">Implement Portfolio</Button>
 ////////////////
-
-
-// class APIdata extends Component {
-//   render(props) {
-//     return (
-//       <div className="APIdata">
-//        <p>API data:</p>
-//        {this.props.api_resp}
-//       </div>
-//     );
-//   }
-// };
-
 
 
 // Component: Select asset classes
 class AssetMenu extends Component { //createReactClass
 
   handleClick(e, action_asset) {
-    //console.log(action_asset)
     this.props.updateAssetSelection(action_asset)
   }
 
@@ -906,36 +778,14 @@ class ResearchPanel extends Component {
 
 class PortfolioAnalysis extends Component {
   render(props) {
-
-    // let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
-
-
-    //           //Object.keys(dataField.average_returns).forEach(function(key) {}
-
-    //           let average_returns = dataField.average_returns.map(function(obj) {
-    //             let asset = Object.keys(obj)[0]
-    //             let value = obj[asset]
-    //             return (<div>
-    //                       {asset} 
-    //                       {value}
-    //                     </div>)
-    //           })
-
-    //           return (
-    //                <div>Average Returns: {average_returns}</div>
-    //             )
-    //         })
-    
+   
     let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
 
         let optimal_weights = dataField.optimal_weights.map(function(obj, index) {
-          //console.log("kkkk ", Object.keys(obj))
-          //console.log("mmmm ", obj)
+
           let asset = Object.keys(obj)[0]
           let value = obj[asset]
-          //console.log("xxxx ", index)
-          //console.log("yyyy ", asset)
-          //console.log("zzzz ", value)
+
           return (
                     <tr>
                       <td>{asset}</td>
@@ -961,7 +811,6 @@ class PortfolioAnalysis extends Component {
           )
     })
 
-
     return (
       <div className="PortfolioAnalysis">
         <h3>Portfolio Analysis</h3>
@@ -972,13 +821,3 @@ class PortfolioAnalysis extends Component {
 };
 
 export default App;
-
-
-// {this.props.portfolioAnalysis.average_returns}
-// {this.props.portfolioAnalysis.covariance_matrix}
-          
-          // {this.props.portfolioAnalysis.target_return}
-          // {this.props.portfolioAnalysis.optimal_weights}
-          // {this.props.portfolioAnalysis.expected_return}
-          // {this.props.portfolioAnalysis.expected_variance}
-          // {this.props.portfolioAnalysis.sharpe_ratio}
