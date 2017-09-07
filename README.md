@@ -1,50 +1,54 @@
-# ETF Allocator Beta
+# "Create Portfolio" 
 
-The ETF Allocator (in Beta stage) is a portfolio management tool for exchange-traded funds investors. It is meant to provide tools in portfolio allocation, monitoring, trading and risk management for ETF portfolios. This Beta version comprises these features: user authentication, portfolio overview, API link up for real ETF prices, and basic charting. 
+--- Feature enhancement of ETFallocator Beta
+
+This project is about creating a portfolio optimization tool for deployment under [ETFallocator (Beta)](https://github.com/kepler62f/project-2), a portfolio management tool for exchange-traded funds investors.
 
 ## Live Version
 
-Access the heroku deployment [here](https://etfallocator.herokuapp.com/) 
+* Access the deployment directly [here](https://github.com/kepler62f/project-4) 
+* Indirect access through ETFallocator by "Create Portfolio" link after sign in [here](https://etfallocator.herokuapp.com)
+* Portfolio optimizer API can be viewed as browsable API through an example [query](https://sheltered-coast-96154.herokuapp.com/create_portfolio/get_optimal_weights?addedCash=true&addedSP500=false&addedEurope=true&addedEM=false&addedBonds=true&addedGold=false)
 
 ## Built With
 
-What did you use to build it, list the technologies, plugins, gems, packages etc.
+Based on prior project experience with backend frameworks like Node.js and Ruby on Rails, I taught myself Python/Django to build this project.
 
-* [jQuery](http://jquery.com/)
-* [Express](https://expressjs.com/) 
-* [Mongoose](http://mongoosejs.com/)
-* [Passport](http://passportjs.org/)
-* [DataTables](https://datatables.net/)
-* [MetricsGraphics.js](https://www.metricsgraphicsjs.org/)
+**Backend**
+* [Python](http://jquery.com/)
+* [Django](https://expressjs.com/)
+* [Django Rest Framework](http://www.django-rest-framework.org/) - Toolkit for building Web APIs.
+* [Django Cors Header](https://github.com/ottoyiu/django-cors-headers) - An app that adds CORS (Cross-Origin Resource Sharing) headers to responses
+* [sslserver](https://github.com/teddziuba/django-sslserver) - Test development site over HTTPS
 
-## Workflow
+**Frontend**
+* [React.js](https://facebook.github.io/react/) - A JavaScript library for building user interfaces
+* [immutability-helper](https://github.com/kolodny/immutability-helper)
+* [Foundaton](http://foundation.zurb.com/) - A responsive front-end framework
 
-**Wireframes**
+**Data Analysis**
+* [NumPy](http://www.numpy.org/) - Package for scientific computing with Python
+* [Pandas](http://pandas.pydata.org/) -  A Python library providing data structures and data analysis tools.
+* [portfolioopt](https://github.com/czielinski/portfolioopt) - This module provides a set of functions for financial portfolio optimization, such as construction of Markowitz portfolios, minimum variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio portfolios) in Python.
 
-Based on a one-week project timeline, I devised at the start the following wireframes as a visual reference to the scope of the project. 
+**Deployment**
+* [Heroku](https://www.heroku.com/)
 
-![](documentation/mockup_welcome.png)
+## User Story / System Flow
 
-![](documentation/mockup_home.png)
+A [school of thought](https://blogs.cfainstitute.org/investor/2012/02/16/setting-the-record-straight-on-asset-allocation/) suggests that asset allocation explains significantly the variability of investment returns. The Modern Portfolio Theory pioneered by Harry Markowitz is a classic framework used as a guide for portfolio allocation. 
 
-<br/>
+In the "Create Portfolio" feature, the user selects from a menu of given asset classes and requests an analysis of the optimized portfolio allocation. User can add or remove asset classes according to personal investment policy. 
 
-Without signing in, a user enters the Welcome page when accessing etfallocator.com. After sign in, the user is directed to etfallocator.com/home and can view a list of her portfolio positions. She can then buy or sell each position. The latest end-of-day market price of each instrument will be displayed prior to transaction.
+## Future Improvements
 
-**Entity Relationship Diagram (Crow's Foot with Field Types)**
-
-The header of each box represents the entitiy while the bottom right column and bottom left represent field names and field types respectively. The entities are defined with scalability in mind. For example, splitting User and Portfolio allows the design of one User to many Portfolios in the future although this Beta currently restricts to one and only one Portfolio for each User. In the future it may also be possible to extend one Portfolio to multiple Users for joint investment accounts or advised accounts.
-
-A User can add multiple positions to her Portfolio. Each position is linked to one and only one instrument (quantity restricted to one unit in Beta).   
-
-Instrument (i.e. an Exchange Traded Fund) is defined separately from Position. This facilitate maintenance as instrument data is sourced separately and may change over time independently from Positions.
-
-![](documentation/ERD_Model_ETF_Allocator_v0.1.1.png)
-
+* Implement authenticated and permission based API calls and page access
+* Research feature: Call up background information on each asset class
+* Portfolio implementation: Simulate ETF trade execution to turn portfolio plan in actual portfolio
 
 ## Acknowledgments
 
-* Quandl Inc for US EOD data via API
+* General Assembly instructor [Prima](https://github.com/primaulia) for project guidance.
 
 
 

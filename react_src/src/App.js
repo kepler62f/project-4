@@ -418,22 +418,6 @@ class App extends Component {
             //console.log(JSON.parse(data.optimal_weights))
 
             let weights = JSON.parse(data.optimal_weights)
-            // console.log("type: ", typeof(objects))
-
-            // Object.keys(objects).map(function(object) {
-            //   console.log(object)
-            // })
-
-            //updateOptimalWeights(objects)
-
-        //     optimal_weights: [
-        //   {"Cash": 0},
-        //   {"S&P 500": 0},
-        //   {"MSCI Europe": 0},
-        //   {"MSCI Emerging Markets": 0},
-        //   {"ICE US Core Bond": 0},
-        //   {"Gold": 0}
-        // ],
 
             Object.keys(weights).map((weight) => {
               console.log(weight)
@@ -449,7 +433,7 @@ class App extends Component {
                         optimal_weights: { 
                           0: {
                             "Cash": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
@@ -472,7 +456,7 @@ class App extends Component {
                         optimal_weights: { 
                           1: {
                             "S&P 500": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
@@ -494,7 +478,7 @@ class App extends Component {
                         optimal_weights: { 
                           2: {
                             "MSCI Europe": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
@@ -516,7 +500,7 @@ class App extends Component {
                         optimal_weights: { 
                           3: {
                             "MSCI Emerging Markets": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
@@ -538,7 +522,7 @@ class App extends Component {
                         optimal_weights: { 
                           4: {
                             "ICE US Core Bond": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
@@ -560,7 +544,7 @@ class App extends Component {
                         optimal_weights: { 
                           5: {
                             "Gold": {
-                              $set: weights[weight]*100
+                              $set: (weights[weight]*100).toFixed(4)
                           }
                         } 
                       }
