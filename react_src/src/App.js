@@ -47,57 +47,61 @@ class App extends Component {
       }]
     }
     this.updateAssetSelection = this.updateAssetSelection.bind(this)
-    this.updateOptimalWeights = this.updateOptimalWeights.bind(this)
+    //this.updateOptimalWeights = this.updateOptimalWeights.bind(this)
+    this.getSummaryStats = this.getSummaryStats.bind(this)
   }
 
 
-  updateOptimalWeights(weights) {
 
-    Object.keys(weights).map(function(weight) {
-              console.log(weight)
-              console.log(weights[weight])
+  // updateOptimalWeights(weights) {
 
-              if (weight === "Cash") {
-                console.log("yes it's cash")
+  //   Object.keys(weights).map(function(weight) {
+  //             console.log(weight)
+  //             console.log(weights[weight])
+
+  //             if (weight === "Cash") {
+  //               console.log("yes it's cash")
+
+  //               console.log(this)
+
+  //               console.log("before, weight is: ") //, this.state.portfolioAnalysis
+  //               // let newState = update(this.state, {
+  //               //         portfolioAnalysis: {
+  //               //           optimal_weights: {
+  //               //             Cash: {
+  //               //               $set: weights[weight]  
+  //               //             }
+  //               //           }
+  //               //         }
+  //               //   })
+
+  //               // this.setState(newState,
+  //               //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
+  //               // )
+
+  //               // this.setState(() => {
+  //               //   let newState = update(this.state, {
+  //               //     0: {
+  //               //       portfolioAnalysis: {
+  //               //         optimal_weights: {
+  //               //           Cash: {
+  //               //             $set: weights[weight]  
+  //               //           }
+  //               //         }
+  //               //       }
+  //               //     }
+  //               //   })
+  //               //   return newState 
+  //               // },
+  //               //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
+  //               // )
 
 
-                // let newState = update(this.state, {
-                //         portfolioAnalysis: {
-                //           optimal_weights: {
-                //             Cash: {
-                //               $set: weights[weight]  
-                //             }
-                //           }
-                //         }
-                //   })
+  //             } // if cash
 
-                // this.setState(newState,
-                //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
-                // )
-
-                // this.setState(() => {
-                //   let newState = update(this.state, {
-                //     0: {
-                //       portfolioAnalysis: {
-                //         optimal_weights: {
-                //           Cash: {
-                //             $set: weights[weight]  
-                //           }
-                //         }
-                //       }
-                //     }
-                //   })
-                //   return newState 
-                // },
-                //   () => console.log('after change this.state', this.state.portfolioAnalysis.optimal_weights)
-                // )
-
-
-              } // if cash
-
-    })
+  //   })
   
-  } // updateOptimalWeights
+  // } // updateOptimalWeights
 
   updateAssetSelection(action_asset) {
 
@@ -391,10 +395,16 @@ class App extends Component {
         const APIstring = url + query
         console.log(APIstring)
 
+        // fetch(APIstring)
+        //   .then(function (response) {
+        //     return response.json()
+        //   }).then(function (data) {
+
+
         fetch(APIstring)
-          .then(function (response) {
+          .then((response) => {
             return response.json()
-          }).then(function (data) {
+          }).then((data) => {
             
 
             console.log('Parsed data', data) // try opening windows and render
@@ -407,14 +417,173 @@ class App extends Component {
             //console.log(typeof(data.optimal_weights)) //
             //console.log(JSON.parse(data.optimal_weights))
 
-            let objects = JSON.parse(data.optimal_weights)
+            let weights = JSON.parse(data.optimal_weights)
             // console.log("type: ", typeof(objects))
 
             // Object.keys(objects).map(function(object) {
             //   console.log(object)
             // })
 
-            updateOptimalWeights(objects)
+            //updateOptimalWeights(objects)
+
+        //     optimal_weights: [
+        //   {"Cash": 0},
+        //   {"S&P 500": 0},
+        //   {"MSCI Europe": 0},
+        //   {"MSCI Emerging Markets": 0},
+        //   {"ICE US Core Bond": 0},
+        //   {"Gold": 0}
+        // ],
+
+            Object.keys(weights).map((weight) => {
+              console.log(weight)
+              console.log(weights[weight])
+
+              if (weight === "Cash") {
+
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[0].Cash) 
+
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          0: {
+                            "Cash": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[0])
+                )
+              } // if cash
+
+
+              if (weight === "S&P 500") {
+                console.log("yes it's S&P 500")
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[1]["S&P 500"]) 
+                
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          1: {
+                            "S&P 500": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[1])
+                )
+              } // if S&P 500
+
+              if (weight === "MSCI Europe") {
+                console.log("yes it's MSCI Europe")
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[2]) 
+                
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          2: {
+                            "MSCI Europe": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[2])
+                )
+              } // if MSCI Europe
+
+              if (weight === "MSCI Emerging Markets") {
+                console.log("yes it's MSCI Emerging Markets")
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[3]) 
+                
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          3: {
+                            "MSCI Emerging Markets": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[3])
+                )
+              } // if MSCI Emerging Markets
+
+              if (weight === "ICE US Core Bond") {
+                console.log("yes it's ICE US Core Bond")
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[4]) 
+                
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          4: {
+                            "ICE US Core Bond": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[4])
+                )
+              } // if ICE US Core Bond
+
+              if (weight === "Gold") {
+                console.log("yes it's Gold")
+                console.log("before, weight is: ", this.state.portfolioAnalysis[0].optimal_weights[5]) 
+                
+                  let newState = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          5: {
+                            "Gold": {
+                              $set: weights[weight]*100
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+
+                this.setState(newState,
+                  () => console.log('after change this.state', this.state.portfolioAnalysis[0].optimal_weights[5])
+                )
+              } // if ICE US Core Bond
+            })
+
+
+
+
+
+
+
+
+
+
+
+
 
             // object.map(function(obj, index) {  
             //   let asset = Object.keys(obj)[0]
@@ -444,21 +613,11 @@ class App extends Component {
 
 
 
-          }).catch(function (ex) {
+          }).catch((ex) => {
             console.error('Getting data failed', ex)
           })
 
-      } // getSummaryStats
-
-
-  componentDidMount() {
-
-      // get optimal weights for selected asset classes
-      
-
-      
-  } // componentDidMount 
-  
+  } // getSummaryStats
 
 
   render() {
@@ -480,12 +639,9 @@ class App extends Component {
                   <div className="primary callout">
                     <AssetSelected selectedAssets={this.state.selectedAssets} />
                   </div>
-
-                  
-                  
-                  
+                                    
                   <div className="button-basics-example">                  
-                      <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
+                    <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
                   </div>
           
                 </div>
@@ -500,7 +656,6 @@ class App extends Component {
                   </div>
                 
 
-                
                   <div className="primary callout">
                     <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
                   </div>
