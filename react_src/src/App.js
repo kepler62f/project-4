@@ -814,7 +814,8 @@ class PortfolioAnalysis extends Component {
     return (
       <div className="PortfolioAnalysis">
         <h3>Portfolio Analysis</h3>
-          {portfolioAnalysisComponent}                      
+          {portfolioAnalysisComponent}
+                              
       </div>
     );
   }
