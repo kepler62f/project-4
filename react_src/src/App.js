@@ -23,6 +23,7 @@ class App extends Component {
         addedGold: false
       },
       proposed_allocation: [0,0,0,0,0,0],
+      assetInfoBackground: "",
       portfolioAnalysis: [{
         loading: false,
         average_returns: [
@@ -45,6 +46,7 @@ class App extends Component {
       }]
     }
     this.updateAssetSelection = this.updateAssetSelection.bind(this)
+    this.displayAssetInfo = this.displayAssetInfo.bind(this)
     this.getSummaryStats = this.getSummaryStats.bind(this)
   }
 
@@ -375,7 +377,6 @@ class App extends Component {
               () => console.log('after fetch return this.state loading:', this.state.portfolioAnalysis[0].loading)
             )
 
-
             console.log('Parsed data', data) // try opening windows and render
             console.log('optimal weights: ', data.optimal_weights)
             console.log('expected_return: ', data.expected_return)
@@ -563,6 +564,26 @@ class App extends Component {
   } // getSummaryStats
 
 
+  displayAssetInfo(asset) {
+
+    // pull out research info
+    if (asset === "explore_cash") {
+      this.setState({assetInfoBackground : "Cash could serve as a benchmark for all investments. Investments that don’t outperform cash have failed. Cash also provides a safe haven for funds when financial markets are volatile or appear overvalued. Cash gives a return from the interest earned when left in a bank. However cash is not risk free since its value can be eroded over time by inflation."})
+    } else if (asset === "explore_sp500") {
+      this.setState({assetInfoBackground : "The S&P 500 is widely regarded as the gauge of large-cap U.S. equities. There is over USD 7.8 trillion benchmarked to the index, with index assets comprising approximately USD 2.2 trillion of this total. The index includes 500 leading companies and captures approximately 80% coverage of available market capitalization."})
+    } else if (asset === "explore_europe") {
+      this.setState({assetInfoBackground : "The MSCI Europe Index captures large and mid cap representation across 15 Developed Markets (DM) countries in Europe. With over 400 constituents, the index covers approximately 85% of the free float-adjusted market capitalization across the European Developed Markets equity universe."})
+    } else if (asset === "explore_EM") {
+      this.setState({assetInfoBackground : "The MSCI Emerging Markets Index captures large and mid cap representation across 24 Emerging Markets (EM) countries. With 842 constituents, the index covers approximately 85% of the free float-adjusted market capitalization in each country."})
+    } else if (asset === "explore_bonds") {
+      this.setState({assetInfoBackground : "The ICE U.S. Treasury Core Bond Index is an index composing of U.S. Treasuries ranging from 1-30 year maturities"})
+    } else if (asset === "explore_gold") {
+      this.setState({assetInfoBackground : "Gold, the yellow metal, is seen traditionally seen as a safe haven asset that performs well during periods of political or economic distress. Some have considered gold as an inflation hedge or portfolio diversifier."})
+    }
+
+  } // displayAssetInfo
+
+
   render() {
     return (
       <div>
@@ -577,23 +598,28 @@ class App extends Component {
                 
                 <div className="primary callout">
 
-                  <AssetMenu updateAssetSelection={this.updateAssetSelection} />
+                  <AssetMenu updateAssetSelection={this.updateAssetSelection} displayAssetInfo={this.displayAssetInfo} />
                   
                   <div className="primary callout">
                     <AssetSelected selectedAssets={this.state.selectedAssets} />
                   </div>
-                                    
-                  <div className="button-basics-example">                  
-                    <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
-                  </div>
-          
-                  <div>
-                  {(() => {
-                      if (this.state.portfolioAnalysis[0].loading) {
-                        console.log("loading loading...")
-                        return (<img src="./loading.gif" />)
-                      }
-                    })()}
+                  
+                  <div className="grid-x">
+
+                    <div className="small-4 cell">
+                      <div className="button-basics-example">                  
+                        <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
+                      </div>
+                    </div>
+
+                    <div className="small-8 cell">
+                      {(() => {
+                          if (this.state.portfolioAnalysis[0].loading) {
+                            return (<img src={require("./loading.gif")} height="30px" width="30px" />)
+                          }
+                        })()}
+                    </div>
+
                   </div>
 
                 </div>
@@ -603,10 +629,9 @@ class App extends Component {
             <div className="medium-6 large-8 cell">
                                 
                   <div className="primary callout">
-                    <ResearchPanel chart={<Chart />} />
+                    <ResearchPanel chart={<Chart />} assetInfo={this.state.assetInfoBackground} />
                   </div>
                 
-
                   <div className="primary callout">
                     <PortfolioAnalysis portfolioAnalysis={this.state.portfolioAnalysis} />
                   </div>
@@ -639,6 +664,10 @@ class AssetMenu extends Component { //createReactClass
     this.props.updateAssetSelection(action_asset)
   }
 
+  handleResearchClick(e, asset) {
+    this.props.displayAssetInfo(asset)
+  }
+
   render() {
     return (
       <div className="assetMenu">
@@ -655,37 +684,37 @@ class AssetMenu extends Component { //createReactClass
           <tbody>
             <tr>
               <td>Cash</td> 
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_cash">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_cash" onClick={(e) => this.handleResearchClick(e, "explore_cash")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}>Add</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}>Remove</Button></td>
             </tr>
             <tr>
               <td>S&P 500 </td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_sp500">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_sp500" onClick={(e) => this.handleResearchClick(e, "explore_sp500")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}>Add</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}>Remove</Button></td>
             </tr>
             <tr>
               <td>MSCI Europe</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_europe">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_europe" onClick={(e) => this.handleResearchClick(e, "explore_europe")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}>Add</Button> </td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}>Remove</Button></td>
             </tr>
             <tr>
               <td>MSCI Emerging Market </td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_EM">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_EM" onClick={(e) => this.handleResearchClick(e, "explore_EM")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}>Add</Button> </td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}>Remove</Button></td>
             </tr>
             <tr>
               <td>ICE U.S. Treasury Core Bond Index</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_bonds">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_bonds" onClick={(e) => this.handleResearchClick(e, "explore_bonds")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}>Add</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}>Remove</Button></td>
             </tr>
             <tr>
               <td>Gold</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_gold">Research</Button></td>
+              <td><Button size={Sizes.SMALL} type="submit" id="explore_gold" onClick={(e) => this.handleResearchClick(e, "explore_gold")}>Research</Button></td>
               <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}>Add</Button> </td>
               <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}>Remove</Button></td>
             </tr>
@@ -831,17 +860,22 @@ class Chart extends Component {
   render() {
     return (
       <div className="chart">
-       <p>(Static info of individual asset class will appear here) </p>
+       <p></p>
       </div>
     );
   }
 };
+
+//(Relevant chart of individual asset class will appear here)
 
 class ResearchPanel extends Component {
   render(props) {
     return (
       <div className="ResearchPanel">
         <h3>Research</h3>
+          <div>
+            {this.props.assetInfo}
+          </div>
           <div className="ResearchPanel-chart">
             {this.props.chart}
           </div>
