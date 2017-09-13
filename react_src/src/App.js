@@ -24,6 +24,7 @@ class App extends Component {
       },
       proposed_allocation: [0,0,0,0,0,0],
       portfolioAnalysis: [{
+        loading: false,
         average_returns: [
           {"Cash":0}, 
           {"S&P 500":0}
@@ -307,6 +308,21 @@ class App extends Component {
 
   getSummaryStats(updateOptimalWeights) {
 
+        let newRet = update(this.state, {
+                  portfolioAnalysis: { 
+                    0: {
+                    loading: { 
+                          $set: true
+                      }
+                    } 
+                  }
+                }
+              )
+
+        this.setState(newRet,
+          () => console.log('after change this.state loading:', this.state.portfolioAnalysis[0].loading)
+        )
+
         //const url = 'https://localhost:8000/create_portfolio/get_optimal_weights?'
         const url = 'https://sheltered-coast-96154.herokuapp.com/create_portfolio/get_optimal_weights?'
         var query = ''
@@ -344,6 +360,22 @@ class App extends Component {
             return response.json()
           }).then((data) => {
             
+            let loadStatus = update(this.state, {
+                  portfolioAnalysis: { 
+                    0: {
+                    loading: { 
+                          $set: false
+                      }
+                    } 
+                  }
+                }
+              )
+
+            this.setState(loadStatus,
+              () => console.log('after fetch return this.state loading:', this.state.portfolioAnalysis[0].loading)
+            )
+
+
             console.log('Parsed data', data) // try opening windows and render
             console.log('optimal weights: ', data.optimal_weights)
             console.log('expected_return: ', data.expected_return)
@@ -488,12 +520,7 @@ class App extends Component {
                 )
               } // if ICE US Core Bond
 
-
-              
-                
-
             }) // map
-          
 
           console.log("before, expected_return is: ", this.state.portfolioAnalysis[0].expected_return) 
                 
@@ -560,6 +587,15 @@ class App extends Component {
                     <Button color={Colors.PRIMARY} size={Sizes.SMALL} type="submit" id="analyzePortfolio" onClick={() => this.getSummaryStats(this.updateOptimalWeights)}>Analyze Portfolio</Button>
                   </div>
           
+                  <div>
+                  {(() => {
+                      if (this.state.portfolioAnalysis[0].loading) {
+                        console.log("loading loading...")
+                        return (<img src="./loading.gif" />)
+                      }
+                    })()}
+                  </div>
+
                 </div>
 
             </div>
@@ -583,6 +619,9 @@ class App extends Component {
     );
   }
 } 
+
+
+// style="width:20px;height:20px;"
 
 ////////////////
 // Future enhancements

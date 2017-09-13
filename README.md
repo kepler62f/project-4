@@ -46,6 +46,10 @@ In the "Create Portfolio" feature, the user selects from a menu of given asset c
 * Research feature: Call up background information on each asset class
 * Portfolio implementation: Simulate ETF trade execution to turn portfolio plan in actual portfolio
 
+## Pending Bug Fixes
+
+* To reset all optimal weight values to zero when user send new Portfolio Analysis request
+
 ## Acknowledgments
 
 * General Assembly instructor [Prima](https://github.com/primaulia) for project guidance.
