@@ -591,7 +591,7 @@ class App extends Component {
 
 
   componentDidMount() {
-    
+      document.title = "ETFallocator - PortfolioOptimizer";
         //$(document).foundation();
     
   }
@@ -600,15 +600,25 @@ class App extends Component {
     return (
       <div>
 
-        
-        <div className="grid-x grid-padding-x">
-          <div className="Banner">
-            <h1>ETFallocator</h1>
-
-
+        <div className="top-bar">
+          <div className="top-bar-left">
+            <ul className="dropdown menu" data-dropdown-menu>
+              <li className="menu-text">ETFallocator</li>
+              <li>
+                <a href="">Welcome</a>
+              </li>
+              <li><a href="">About</a></li>
+              <li><a href="">Contact</a></li>
+            </ul>
           </div>
+          <div className="top-bar-right">
+            <ul className="menu">
+              <li><a href="">Sign Out</a></li>
+            </ul>
+          </div>
+        </div>
 
-          <nav aria-label="You are here:" role="navigation">
+        <nav aria-label="You are here:" role="navigation">
           <Breadcrumbs>
             <BreadcrumbItem><a>Home</a></BreadcrumbItem>
             <BreadcrumbItem><a>Portfolio</a></BreadcrumbItem>
@@ -619,12 +629,6 @@ class App extends Component {
             </BreadcrumbItem>
           </Breadcrumbs>
         </nav>
-
-
-          
-        </div>
-
-        
       
         <div className="grid-x grid-padding-x">
           
@@ -679,6 +683,9 @@ class App extends Component {
   }
 } 
 
+// <div className="Banner">
+//   <h1>ETFallocator</h1>
+// </div>
 
 // style="width:20px;height:20px;"
 
