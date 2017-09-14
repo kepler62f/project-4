@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper'
-import './foundation.css';
+import $ from 'jquery'
+import '../node_modules/foundation-sites/dist/css/foundation.min.css';
+import './App.css'
+//import Foundation from 'react-foundation';
 import { 
   Button, Colors, Sizes, 
-  GridContainer, Grid, Cell 
+  GridContainer, Grid, Cell,
+  Breadcrumbs, BreadcrumbItem, 
+  Inline, Menu, MenuItem, MenuText, Icon
 } from 'react-foundation';
+
 
 // structuring location of state and props ; local/global
 // https://stackoverflow.com/questions/21285923/reactjs-two-components-communicating
@@ -584,14 +590,42 @@ class App extends Component {
   } // displayAssetInfo
 
 
+  componentDidMount() {
+    
+        //$(document).foundation();
+    
+  }
+
   render() {
     return (
       <div>
 
-        <div className="grid-x grid-padding-x">
-          <h1>Create new portfolio</h1>
-        </div>
         
+        <div className="grid-x grid-padding-x">
+          <div className="Banner">
+            <h1>ETFallocator</h1>
+
+
+          </div>
+
+          <nav aria-label="You are here:" role="navigation">
+          <Breadcrumbs>
+            <BreadcrumbItem><a>Home</a></BreadcrumbItem>
+            <BreadcrumbItem><a>Portfolio</a></BreadcrumbItem>
+            <BreadcrumbItem><a>Create New</a>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <Inline showForSr>Current: </Inline> Markowitz Optimized
+            </BreadcrumbItem>
+          </Breadcrumbs>
+        </nav>
+
+
+          
+        </div>
+
+        
+      
         <div className="grid-x grid-padding-x">
           
             <div className="medium-6 large-4 cell">
@@ -674,13 +708,7 @@ class AssetMenu extends Component { //createReactClass
         <h3>Select asset classes:</h3>
 
         <table id="assetListTable">
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
+          
           <tbody>
             <tr>
               <td>Cash</td> 

@@ -27,3 +27,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Banner {
+  padding: 20px;
+}
+
+nav {
+  padding: 20px;
+}
