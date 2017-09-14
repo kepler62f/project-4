@@ -43,8 +43,10 @@ In the "Create Portfolio" feature, the user selects from a menu of given asset c
 ## Future Improvements
 
 * Implement authenticated and permission based API calls and page access
-* Research feature: Call up background information on each asset class
+* Research feature: Enrich background information on each asset class e.g. time series chart
+* Improve asset classes discovery process: To scale up universe of asset classes available, asset class search feature based on past returns/volatility/geography etc.  
 * Portfolio implementation: Simulate ETF trade execution to turn portfolio plan in actual portfolio
+* Reduce repetition in React code
 
 ## Pending Bug Fixes
 
