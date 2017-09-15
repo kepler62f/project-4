@@ -3,6 +3,7 @@ import update from 'immutability-helper'
 import $ from 'jquery'
 import '../node_modules/foundation-sites/dist/css/foundation.min.css';
 import './App.css'
+import './foundation-icons/foundation-icons.css'
 //import Foundation from 'react-foundation';
 import { 
   Button, Colors, Sizes, 
@@ -602,20 +603,20 @@ class App extends Component {
 
         <div className="top-bar">
           <div className="top-bar-left">
-            <ul className="dropdown menu" data-dropdown-menu>
-              <li className="menu-text">ETFallocator</li>
+            <ul className="menu">
+              <li className="menu-text"><h2>ETFallocator</h2></li>
+            </ul>
+          </div>
+          <div className="top-bar-right">
+            <ul className="menu">
               <li>
                 <a href="">Welcome</a>
               </li>
               <li><a href="">About</a></li>
               <li><a href="">Contact</a></li>
-            </ul>
-          </div>
-          <div className="top-bar-right">
-            <ul className="menu">
               <li><a href="">Sign Out</a></li>
             </ul>
-          </div>
+          </div>        
         </div>
 
         <nav aria-label="You are here:" role="navigation">
@@ -683,6 +684,9 @@ class App extends Component {
   }
 } 
 
+//<ul className="dropdown menu" data-dropdown-menu>
+//  </ul>
+
 // <div className="Banner">
 //   <h1>ETFallocator</h1>
 // </div>
@@ -712,46 +716,46 @@ class AssetMenu extends Component { //createReactClass
   render() {
     return (
       <div className="assetMenu">
-        <h3>Select asset classes:</h3>
+        <h4>Select asset classes:</h4>
 
         <table id="assetListTable">
           
           <tbody>
             <tr>
               <td>Cash</td> 
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_cash" onClick={(e) => this.handleResearchClick(e, "explore_cash")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}>Add</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}>Remove</Button></td>
+              <td><Button className="infoButton" size={Sizes.SMALL} isHollow type="submit" id="explore_cash" onClick={(e) => this.handleResearchClick(e, "explore_cash")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_cash" onClick={(e) => this.handleClick(e, "add_cash")}><Icon name="fi-plus"/></Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_cash" onClick={(e) => this.handleClick(e, "remove_cash")}><Icon name="fi-minus"/></Button></td>
             </tr>
             <tr>
-              <td>S&P 500 </td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_sp500" onClick={(e) => this.handleResearchClick(e, "explore_sp500")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}>Add</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}>Remove</Button></td>
+              <td>S&P 500</td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="explore_sp500" onClick={(e) => this.handleResearchClick(e, "explore_sp500")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_sp500" onClick={(e) => this.handleClick(e, "add_sp500")}><Icon name="fi-plus"/></Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_sp500" onClick={(e) => this.handleClick(e, "remove_sp500")}><Icon name="fi-minus"/></Button></td>
             </tr>
             <tr>
               <td>MSCI Europe</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_europe" onClick={(e) => this.handleResearchClick(e, "explore_europe")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}>Add</Button> </td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}>Remove</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="explore_europe" onClick={(e) => this.handleResearchClick(e, "explore_europe")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_europe" onClick={(e) => this.handleClick(e, "add_europe")}><Icon name="fi-plus"/></Button> </td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_europe" onClick={(e) => this.handleClick(e, "remove_europe")}><Icon name="fi-minus"/></Button></td>
             </tr>
             <tr>
-              <td>MSCI Emerging Market </td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_EM" onClick={(e) => this.handleResearchClick(e, "explore_EM")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}>Add</Button> </td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}>Remove</Button></td>
+              <td>MSCI Emerging Market</td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="explore_EM" onClick={(e) => this.handleResearchClick(e, "explore_EM")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_EM" onClick={(e) => this.handleClick(e, "add_EM")}><Icon name="fi-plus"/></Button> </td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_EM" onClick={(e) => this.handleClick(e, "remove_EM")}><Icon name="fi-minus"/></Button></td>
             </tr>
             <tr>
               <td>ICE U.S. Treasury Core Bond Index</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_bonds" onClick={(e) => this.handleResearchClick(e, "explore_bonds")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}>Add</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}>Remove</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="explore_bonds" onClick={(e) => this.handleResearchClick(e, "explore_bonds")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_bonds" onClick={(e) => this.handleClick(e, "add_bonds")}><Icon name="fi-plus"/></Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_bonds" onClick={(e) => this.handleClick(e, "remove_bonds")}><Icon name="fi-minus"/></Button></td>
             </tr>
             <tr>
               <td>Gold</td>
-              <td><Button size={Sizes.SMALL} type="submit" id="explore_gold" onClick={(e) => this.handleResearchClick(e, "explore_gold")}>Research</Button></td>
-              <td><Button size={Sizes.SMALL} color={Colors.SUCCESS} type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}>Add</Button> </td>
-              <td><Button size={Sizes.SMALL} color={Colors.ALERT} type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}>Remove</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="explore_gold" onClick={(e) => this.handleResearchClick(e, "explore_gold")}>Research</Button></td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="add_gold" onClick={(e) => this.handleClick(e, "add_gold")}><Icon name="fi-plus"/></Button> </td>
+              <td><Button size={Sizes.SMALL} isHollow type="submit" id="remove_gold" onClick={(e) => this.handleClick(e, "remove_gold")}><Icon name="fi-minus"/></Button></td>
             </tr>
           </tbody>
         </table>
@@ -771,7 +775,7 @@ class AssetSelected extends Component {
   render(props) {
     return (
       <div className="assetSelection">
-        <h3>Selection:</h3>
+        <h5>Selection:</h5>
 
         <table id="assetSelectionTable">
           <thead>
@@ -907,7 +911,7 @@ class ResearchPanel extends Component {
   render(props) {
     return (
       <div className="ResearchPanel">
-        <h3>Research</h3>
+        <h4>Research</h4>
           <div>
             {this.props.assetInfo}
           </div>
@@ -963,7 +967,7 @@ class PortfolioAnalysis extends Component {
 
     return (
       <div className="PortfolioAnalysis">
-        <h3>Portfolio Analysis</h3>
+        <h4>Portfolio Analysis</h4>
           <p>Based on historical monthly returns from July 2012 to Jun 2017 for the selected asset classes, with portfolio target return pegged at 70th percentile of average monthly returns, the following allocation would have produced the best risk adjusted returns on a portfolio basis.</p>
           {portfolioAnalysisComponent}
           <p></p>

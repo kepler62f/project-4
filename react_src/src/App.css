@@ -36,3 +36,23 @@ nav {
   margin-top: 10px;
   margin-left: 20px;
 }
+
+/*.top-bar, .top-bar-left, .menu-text, .top-bar-right {
+  background: blue;
+}*/
+
+/*ul.menu, li.menu-text {
+  padding: 0px 0px 0px 1rem;
+}*/
+
+.fi-info, .fi-plus, .fi-minus {
+   font-size: 12px;
+}
+
+/*.fi-info {
+   font-size: 18px;
+}*/
+
+/*.infoButton {
+  padding: 0.85em;
+}*/
