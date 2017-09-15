@@ -1,7 +1,11 @@
 {
-  "main.css": "static/css/main.2dcbcf18.css",
-  "main.css.map": "static/css/main.2dcbcf18.css.map",
-  "main.js": "static/js/main.dbd9ef7f.js",
-  "main.js.map": "static/js/main.dbd9ef7f.js.map",
+  "main.css": "static/css/main.0853a0b7.css",
+  "main.css.map": "static/css/main.0853a0b7.css.map",
+  "main.js": "static/js/main.b23ce1b1.js",
+  "main.js.map": "static/js/main.b23ce1b1.js.map",
+  "static/media/foundation-icons.eot": "static/media/foundation-icons.92827f08.eot",
+  "static/media/foundation-icons.svg": "static/media/foundation-icons.17cb1ed2.svg",
+  "static/media/foundation-icons.ttf": "static/media/foundation-icons.e20945d7.ttf",
+  "static/media/foundation-icons.woff": "static/media/foundation-icons.a188c2f7.woff",
   "static/media/loading.gif": "static/media/loading.9e0373c2.gif"
 }
