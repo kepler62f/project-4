@@ -25,7 +25,7 @@ Based on prior project experience with backend frameworks like Node.js and Ruby 
 * [React.js](https://facebook.github.io/react/) - A JavaScript library for building user interfaces
 * [immutability-helper](https://github.com/kolodny/immutability-helper) - A helper tool for targeting states in deeply nested state structures and changing their values
 * [Foundaton](http://foundation.zurb.com/) - A responsive front-end framework
-* [Recharts](http://recharts.org/#/en-US) A charting library built with React.js and D3
+* [Recharts](http://recharts.org/#/en-US) - A charting library built with React.js and D3
 
 **Data Analysis**
 * [NumPy](http://www.numpy.org/) - Package for scientific computing with Python
