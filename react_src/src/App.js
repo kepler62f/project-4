@@ -12,6 +12,8 @@ import {
   Inline, Menu, MenuItem, MenuText, Icon
 } from 'react-foundation';
 
+import {PieChart, Pie, Legend, Tooltip} from 'recharts'
+
 
 // structuring location of state and props ; local/global
 // https://stackoverflow.com/questions/21285923/reactjs-two-components-communicating
@@ -858,6 +860,7 @@ class AssetSelected extends Component {
   }
 };
 
+// currently unused component
 class TimeHorizonSelection extends Component {
   render() {
     return (
@@ -869,6 +872,7 @@ class TimeHorizonSelection extends Component {
   }
 };
 
+// currently unused component
 class TargetReturnSelection extends Component {
   render() {
     return (
@@ -880,6 +884,7 @@ class TargetReturnSelection extends Component {
   }
 };
 
+// currently unused component
 class RiskToleranceSelection extends Component {
   render() {
     return (
@@ -932,13 +937,18 @@ class ResearchPanel extends Component {
 
 class PortfolioAnalysis extends Component {
   render(props) {
-   
+    
+    let pieChartData = []
     let portfolioAnalysisComponent = this.props.portfolioAnalysis.map(function(dataField) {
 
         let optimal_weights = dataField.optimal_weights.map(function(obj, index) {
 
           let asset = Object.keys(obj)[0]
           let value = obj[asset]
+
+          if (value != 0) {
+            pieChartData.push({name: asset, value: parseFloat(parseFloat(value).toFixed(1))})
+          }
 
           return (
                     <tr>
@@ -947,9 +957,10 @@ class PortfolioAnalysis extends Component {
                     </tr>
                   )
         })
-
+      
         return (
              <div>
+                <WeightagePieChart pieChartData={pieChartData} />
                 <table id="optimizedWeights">
                   <thead>
                     <tr>
@@ -977,5 +988,25 @@ class PortfolioAnalysis extends Component {
     );
   }
 };
+
+class WeightagePieChart extends Component {
+
+  render (props) {
+
+    console.log("yyyyy pieChartData yyyyy", this.props.pieChartData)
+
+    if (this.props.pieChartData.length > 0) {
+      return (
+        <PieChart width={800} height={300}>
+          <Pie isAnimationActive={false} data={this.props.pieChartData} cx={400} cy={120} outerRadius={80} fill="#8884d8" label />
+          <Tooltip/>
+        </PieChart>
+      )
+    } else {
+      return (<div></div>)
+    }
+  }
+}
+
 
 export default App;

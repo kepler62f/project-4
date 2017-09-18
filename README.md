@@ -47,6 +47,7 @@ In the "Create Portfolio" feature, the user selects from a menu of given asset c
 * Improve asset classes discovery process: To scale up universe of asset classes available, asset class search feature based on past returns/volatility/geography etc.  
 * Portfolio implementation: Simulate ETF trade execution to turn portfolio plan in actual portfolio
 * Reduce repetition in React code
+* Investigate slow performance of PortfolioOptimizer. 
 
 ## Pending Bug Fixes
 

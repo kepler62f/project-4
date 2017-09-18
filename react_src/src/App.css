@@ -45,6 +45,10 @@ nav {
   padding: 0px 0px 0px 1rem;
 }*/
 
+.top-bar {
+  padding: 0;
+}
+
 .fi-info, .fi-plus, .fi-minus {
    font-size: 12px;
 }

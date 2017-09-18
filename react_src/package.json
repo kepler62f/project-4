@@ -10,7 +10,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-foundation": "^0.9.1",
-    "react-scripts": "1.0.12"
+    "react-scripts": "1.0.12",
+    "recharts": "^1.0.0-apha.5"
   },
   "scripts": {
     "predeploy": "npm run build",
