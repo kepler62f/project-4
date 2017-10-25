@@ -391,7 +391,46 @@ class App extends Component {
             console.log('expected_return: ', data.expected_return)
             console.log('expected_variance: ', data.expected_variance)
 
+            // let intermediateRefresh = update(this.state, {
+            //   portfolioAnalysis: {
+            //     0: {
+            //       optimal_weights: {
+            //           {"Cash": {$set: 0}},
+            //           {"S&P 500": {$set: 0}},
+            //           {"MSCI Europe": {$set: 0}},
+            //           {"MSCI Emerging Markets": {$set: 0}},
+            //           {"ICE US Core Bond": {$set: 0}},
+            //           {"Gold": {$set: 0}}
+            //         }
+            //       }
+            //     }
+            //   }
+            // })
+
+            // let intermediateRefresh = update(this.state, {
+            //   portfolioAnalysis: {0: {optimal_weights: {"Cash": {$set: 0}}}},
+            //   portfolioAnalysis: {0: {optimal_weights: {"S&P 500": {$set: 0}}}},
+            //   portfolioAnalysis: {0: {optimal_weights: {"MSCI Europe": {$set: 0}}}},
+            //   portfolioAnalysis: {0: {optimal_weights: {"MSCI Emerging Markets": {$set: 0}}}},
+            //   portfolioAnalysis: {0: {optimal_weights: {"ICE US Core Bond": {$set: 0}}}},
+            //   portfolioAnalysis: {0: {optimal_weights: {"Gold": {$set: 0}}}}
+            // })
+
+
+
+            // this.setState(intermediateRefresh, () => {
+            // }) // this.setState(intermediateRefresh, () => {
+
+
+
+
+
             let weights = JSON.parse(data.optimal_weights)
+
+            
+
+
+
 
             Object.keys(weights).map((weight) => {
               console.log(weight)
@@ -565,10 +604,106 @@ class App extends Component {
             this.setState(newVariance,
               () => console.log('after change this.state exp ret:', this.state.portfolioAnalysis[0].expected_variance)
             )
+            
+
+
+            if (!("Cash" in weights)) {             
+              let CashRefresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          0: {
+                            "Cash": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(CashRefresh)
+            }
+            if (!("S&P 500" in weights)) {
+              let SP500Refresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          1: {
+                            "S&P 500": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(SP500Refresh)
+            }
+            if (!("MSCI Europe" in weights)) {
+              let EuropeRefresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          2: {
+                            "MSCI Europe": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(EuropeRefresh)
+            }
+            if (!("MSCI Emerging Markets" in weights)) {
+              let EMRefresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          3: {
+                            "MSCI Emerging Markets": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(EMRefresh)
+            }
+            if (!("ICE US Core Bond" in weights)) {
+              let BondRefresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          4: {
+                            "ICE US Core Bond": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(BondRefresh)
+            }
+            if (!("Gold" in weights)) {
+              let GoldRefresh = update(this.state, {
+                      portfolioAnalysis: { 
+                        0: {
+                        optimal_weights: { 
+                          5: {
+                            "Gold": {
+                              $set: 0
+                          }
+                        } 
+                      }
+                    }}}
+                  )
+              this.setState(GoldRefresh)
+            }
+
 
           }).catch((ex) => {
             console.error('Getting data failed', ex)
-          })
+          }) // fetch(APIstring)
+
+
 
   } // getSummaryStats
 
@@ -946,7 +1081,7 @@ class PortfolioAnalysis extends Component {
           let asset = Object.keys(obj)[0]
           let value = obj[asset]
 
-          if (value != 0) {
+          if (value !== 0) {
             pieChartData.push({name: asset, value: parseFloat(parseFloat(value).toFixed(1))})
           }
 
